@@ -20,6 +20,10 @@ int gmf_get_frame_line_size(AVFrame *frame, int idx) {
 	return frame->linesize[idx];
 }
 
+int gmf_get_pixel_luma(AVFrame *frame, int idx, int x, int y) {
+	return frame->data[idx][(frame->linesize[idx]*y) + x];
+}
+
 */
 import "C"
 
@@ -33,6 +37,14 @@ type Frame struct {
 	avFrame   *C.struct_AVFrame
 	mediaType int32
 	CgoMemoryManage
+}
+
+func (this *Frame) PixelLuma(idx int, x int, y int) int {
+	return int(C.gmf_get_pixel_luma(this.avFrame, C.int(idx), C.int(x), C.int(y)))
+}
+
+func (this *Frame) Data() [8]*C.uint8_t {
+	return this.avFrame.data
 }
 
 func NewFrame() *Frame {
