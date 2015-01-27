@@ -47,6 +47,10 @@ func (this *Frame) Data() [8]*C.uint8_t {
 	return this.avFrame.data
 }
 
+func (this *Frame) FramePtr() *C.struct_AVFrame {
+	return this.avFrame
+}
+
 func NewFrame() *Frame {
 	return &Frame{avFrame: C.av_frame_alloc()}
 }
