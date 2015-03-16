@@ -75,11 +75,13 @@ var (
 	AV_CODEC_ID_H264         int   = C.AV_CODEC_ID_H264
 	AV_CODEC_ID_MPEG4        int   = C.AV_CODEC_ID_MPEG4
 	AV_CODEC_ID_JPEG2000     int   = C.AV_CODEC_ID_JPEG2000
+	AV_CODEC_ID_MJPEG        int   = C.AV_CODEC_ID_MJPEG
 	CODEC_FLAG_GLOBAL_HEADER int   = C.CODEC_FLAG_GLOBAL_HEADER
 	FF_MB_DECISION_SIMPLE    int   = C.FF_MB_DECISION_SIMPLE
 	FF_MB_DECISION_BITS      int   = C.FF_MB_DECISION_BITS
 	FF_MB_DECISION_RD        int   = C.FF_MB_DECISION_RD
 	AV_SAMPLE_FMT_S16        int32 = C.AV_SAMPLE_FMT_S16
+	AV_SAMPLE_FMT_S16P       int32 = C.AV_SAMPLE_FMT_S16P
 )
 
 type SampleFmt int
@@ -256,6 +258,9 @@ func (this *CodecCtx) TimeBase() AVRational {
 
 func (this *CodecCtx) ChannelLayout() int {
 	return int(this.avCodecCtx.channel_layout)
+}
+func (this *CodecCtx) SetChannelLayout(channelLayout int) {
+	this.avCodecCtx.channel_layout = C.uint64_t(channelLayout)
 }
 
 func (this *CodecCtx) BitRate() int {
